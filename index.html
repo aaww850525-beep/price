@@ -346,6 +346,10 @@ function renderSearch(){
   list.sort((a,b)=>BRANDS.indexOf(a.b)-BRANDS.indexOf(b.b)||a.ti-b.ti||(a.ord||0)-(b.ord||0)||a.code.localeCompare(b.code)||(a.flat?a.name.localeCompare(b.name):0)||sIdx(a.size)-sIdx(b.size));
   const total=list.length;list=list.slice(0,400);
   const vs=vendorsFor([...new Set(list.map(p=>p.b))]);
+  { // 欄位順序：折數月份越新越前面，舊折數（灰字）排最後
+    const lm={},fr={};for(const p of list.slice(0,150))for(const v of vs){const d=rate(v,p.b,catOf(p),state.month,p.size);if(!d)continue;if(!lm[v]||d.m>lm[v])lm[v]=d.m;if(!d.stale)fr[v]=1}
+    vs.sort((x,y)=>(fr[y]?1:0)-(fr[x]?1:0)||(lm[y]||'').localeCompare(lm[x]||'')||VENDORS.indexOf(x)-VENDORS.indexOf(y));
+  }
   const noPrice=[...ab].filter(b=>!PRICES.some(p=>p.b===b));
   $('#resStat').innerHTML=`找到 ${total} 筆${total>400?'（只顯示前 400 筆，請再縮小條件）':''}・折數月份 ${state.month}`+(!toks.length&&noPrice.length?`<div class="note">${noPrice.join('、')} 還沒有牌價資料（折數已有，見「各廠商折數」）。拿到牌價表傳給 Claude，或到「匯入牌價」貼上。</div>`:'');
   const hasCode=list.some(p=>p.code),hasConn=list.some(p=>p.conn),hasCls=list.some(p=>p.cls);
