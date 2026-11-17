@@ -294,10 +294,10 @@ let state={tab:'search',groups:new Set(GROUPS),sub:{},mat:'',cls:'',item:'',size
 function activeBrands(){const s=new Set();for(const g of state.groups){if(SUBS[g])(state.sub[g]?[state.sub[g]]:BRANDS.filter(b=>groupOf(b)===g)).forEach(b=>s.add(b));else s.add(g)}return s}
 
 /* 法蘭原始品名 → 規格（品項） */
-const FLANGE_SPEC={'鍍鋅 #15010K規格厚B型':'#150/10K 規格厚B型','鍍鋅 #15010K規格厚盲B型':'#150/10K 規格厚盲B型','鍍鋅 #DINPN16德規':'DIN PN16 德規','鍍鋅 #DINPN16德規盲':'DIN PN16 德規 盲','鍍鋅 150#美規正規格A型':'#150 美規正規格A型','鍍鋅 150#美規正規格盲A型':'#150 美規正規格 盲A型',
-'鍍鋅 JIS10K普通法蘭':'JIS 10K 普通','鍍鋅 JIS10K普通盲法蘭':'JIS 10K 普通 盲','鍍鋅 JIS10K規格法蘭':'JIS 10K 規格','鍍鋅 JIS10K規格盲法蘭':'JIS 10K 規格 盲','鍍鋅 JIS10K規格車牙法蘭':'JIS 10K 規格 車牙','鍍鋅 JIS20K規格法蘭':'JIS 20K 規格','鍍鋅 JIS20K規格盲法蘭':'JIS 20K 規格 盲','鍍鋅 JIS5K規格法蘭':'JIS 5K 規格','鍍鋅 JIS5K規格盲法蘭':'JIS 5K 規格 盲',
-'不鏽鋼 10K規格':'JIS 10K 規格','不鏽鋼 10K盲規格':'JIS 10K 規格 盲','不鏽鋼 10K普通':'JIS 10K 普通','不鏽鋼 10K盲普通':'JIS 10K 普通 盲','不鏽鋼 10K規格(牙)':'JIS 10K 規格 車牙','不鏽鋼 5K規格':'JIS 5K 規格','不鏽鋼 5K盲規格':'JIS 5K 規格 盲','不鏽鋼 JIS16K規格':'JIS 16K 規格','不鏽鋼 20K規格':'JIS 20K 規格','不鏽鋼 20K盲規格':'JIS 20K 規格 盲',
-'不鏽鋼 150#規格':'#150 規格','不鏽鋼 150#盲規格':'#150 規格 盲','不鏽鋼 150#10K厚':'#150/10K 厚','不鏽鋼 150#盲10K厚':'#150/10K 厚 盲','不鏽鋼 150#SORF':'#150 SORF','不鏽鋼 DINPN16':'DIN PN16','不鏽鋼 DINPN16-盲板':'DIN PN16 盲','不鏽鋼 水道規格':'水道規格','不鏽鋼 水道規格(牙)':'水道規格 車牙'};
+/* 法蘭品名、排序依「法蘭牌價表(ST、鍍鋅).xlsx」 */
+const FLANGE_SPEC={"鍍鋅 JIS5K規格法蘭":"JIS 5K 規格法蘭","鍍鋅 JIS5K規格盲法蘭":"JIS 5K 規格 盲法蘭","鍍鋅 JIS10K規格法蘭":"JIS 10K 規格法蘭","鍍鋅 JIS10K規格盲法蘭":"JIS 10K 規格 盲法蘭","鍍鋅 JIS10K普通法蘭":"JIS 10K 普通法蘭","鍍鋅 JIS10K普通盲法蘭":"JIS 10K 普通 盲法蘭","鍍鋅 JIS20K規格法蘭":"JIS 20K 規格法蘭","鍍鋅 JIS20K規格盲法蘭":"JIS 20K 規格 盲法蘭","鍍鋅 150#美規正規格A型":"美規 #150 正規格法蘭 A型","鍍鋅 150#美規正規格盲A型":"美規 #150 正規格 盲法蘭 A型","鍍鋅 #DINPN16德規":"德規 DIN PN16 法蘭","鍍鋅 #DINPN16德規盲":"德規 DIN PN16 盲法蘭","鍍鋅 #15010K規格厚B型":"#150 / 10K 規格 厚法蘭 B型","鍍鋅 #15010K規格厚盲B型":"#150 / 10K 規格 厚盲法蘭 B型","鍍鋅 JIS10K規格車牙法蘭":"JIS 10K 規格 車牙法蘭","不鏽鋼 10K規格":"JIS 10K 規格法蘭","不鏽鋼 10K盲規格":"JIS 10K 規格 盲法蘭","不鏽鋼 10K普通":"JIS 10K 普通法蘭","不鏽鋼 10K盲普通":"JIS 10K 普通 盲法蘭","不鏽鋼 5K規格":"JIS 5K 規格法蘭","不鏽鋼 5K盲規格":"JIS 5K 規格 盲法蘭","不鏽鋼 JIS16K規格":"JIS 16K 規格法蘭","不鏽鋼 20K規格":"JIS 20K 規格法蘭","不鏽鋼 20K盲規格":"JIS 20K 規格 盲法蘭","不鏽鋼 150#規格":"美規 #150 規格法蘭","不鏽鋼 150#盲規格":"美規 #150 規格 盲法蘭","不鏽鋼 150#10K厚":"#150 / 10K 厚法蘭","不鏽鋼 150#盲10K厚":"#150 / 10K 厚 盲法蘭","不鏽鋼 DINPN16":"德規 DIN PN16 法蘭","不鏽鋼 DINPN16-盲板":"德規 DIN PN16 盲法蘭","不鏽鋼 10K規格(牙)":"JIS 10K 規格 車牙法蘭","不鏽鋼 水道規格":"水道規格法蘭","不鏽鋼 水道規格(牙)":"水道規格 車牙法蘭","不鏽鋼 150#SORF":"美規 #150 SORF 法蘭"};
+const FLANGE_ORD={"鍍鋅 JIS5K規格法蘭":0,"鍍鋅 JIS5K規格盲法蘭":1,"鍍鋅 JIS10K規格法蘭":2,"鍍鋅 JIS10K規格盲法蘭":3,"鍍鋅 JIS10K普通法蘭":4,"鍍鋅 JIS10K普通盲法蘭":5,"鍍鋅 JIS20K規格法蘭":6,"鍍鋅 JIS20K規格盲法蘭":7,"鍍鋅 150#美規正規格A型":8,"鍍鋅 150#美規正規格盲A型":9,"鍍鋅 #DINPN16德規":10,"鍍鋅 #DINPN16德規盲":11,"鍍鋅 #15010K規格厚B型":12,"鍍鋅 #15010K規格厚盲B型":13,"鍍鋅 JIS10K規格車牙法蘭":14,"不鏽鋼 10K規格":115,"不鏽鋼 10K盲規格":116,"不鏽鋼 10K普通":117,"不鏽鋼 10K盲普通":118,"不鏽鋼 5K規格":119,"不鏽鋼 5K盲規格":120,"不鏽鋼 JIS16K規格":121,"不鏽鋼 20K規格":122,"不鏽鋼 20K盲規格":123,"不鏽鋼 150#規格":124,"不鏽鋼 150#盲規格":125,"不鏽鋼 150#10K厚":126,"不鏽鋼 150#盲10K厚":127,"不鏽鋼 DINPN16":128,"不鏽鋼 DINPN16-盲板":129,"不鏽鋼 10K規格(牙)":130,"不鏽鋼 水道規格":131,"不鏽鋼 水道規格(牙)":132,"不鏽鋼 150#SORF":133};
+const FLANGE_ITEMS=["JIS 5K 規格法蘭","JIS 5K 規格 盲法蘭","JIS 10K 規格法蘭","JIS 10K 規格 盲法蘭","JIS 10K 普通法蘭","JIS 10K 普通 盲法蘭","JIS 20K 規格法蘭","JIS 20K 規格 盲法蘭","美規 #150 正規格法蘭 A型","美規 #150 正規格 盲法蘭 A型","德規 DIN PN16 法蘭","德規 DIN PN16 盲法蘭","#150 / 10K 規格 厚法蘭 B型","#150 / 10K 規格 厚盲法蘭 B型","JIS 10K 規格 車牙法蘭","JIS 16K 規格法蘭","美規 #150 規格法蘭","美規 #150 規格 盲法蘭","#150 / 10K 厚法蘭","#150 / 10K 厚 盲法蘭","水道規格法蘭","水道規格 車牙法蘭","美規 #150 SORF 法蘭"];
 /* 品項：去掉廠牌、材質前綴的短品名 */
 const itemOf=(b,name)=>name.replace(/^(南亞PVC|大洋PVC) /,'').replace(/^(V牌|東山本|其他) ST牙另件 /,'').replace(/^鍍鋅牙另件 /,'').replace(/^鍍鋅鋼管 /,'');
 function build(){
@@ -309,7 +309,7 @@ function build(){
   // 南亞PVC：材質一律「PVC」，原本的 PVC管-灰 等改放「類別」（折數仍照原分類算）
   const FL2=[...FLAT,...FLAT.filter(f=>f[0]==='南亞PVC').map(f=>['大洋PVC',f[1],f[2].replace('南亞PVC','大洋PVC'),f[3],f[4],f[5]])];
   const disp=f=>/PVC$/.test(f[0])?['PVC',f[1].replace(/^PVC/,'')]:f[0]==='鍍鋅牙件'?['鍍鋅',f[1].replace(/^鍍鋅/,'')]:(f[0]==='V牌'||f[0]==='東山本'||f[0]==='ST其他')?['不鏽鋼','牙另件']:f[0]==='法蘭'?[f[1]==='ST法蘭'?'不鏽鋼':'鍍鋅','']:f[0]==='鍍鋅鋼管'?['鍍鋅','']:[f[1],''];
-  FL2.forEach(f=>{const [m2,cls]=disp(f);const sp=f[0]==='法蘭'?(FLANGE_SPEC[f[2]]||f[2]):null;const item=sp||itemOf(f[0],f[2]);PRICES.push({b:f[0],code:'',name:sp?m2+'法蘭 '+sp:f[2],conn:'',mat:f[1],m2,cls,item,size:f[3],unit:f[4],list:f[5],ti:base+CATS[f[0]].indexOf(f[1]),flat:true,key:f[0]+'||'+f[2]+'|'+f[3]})});
+  FL2.forEach(f=>{const [m2,cls]=disp(f);const sp=f[0]==='法蘭'?(FLANGE_SPEC[f[2]]||f[2]):null;const item=sp||itemOf(f[0],f[2]);PRICES.push({ord:sp?(FLANGE_ORD[f[2]]??999)+1:0,b:f[0],code:'',name:sp?m2+' '+sp:f[2],conn:'',mat:f[1],m2,cls,item,size:f[3],unit:f[4],list:f[5],ti:base+CATS[f[0]].indexOf(f[1]),flat:true,key:f[0]+'||'+f[2]+'|'+f[3]})});
 }
 function months(){const s=new Set([...DISC,...userDisc].map(d=>d[1]));return [...s].sort()}
 const mIdx=m=>{const [y,mo]=m.split('.').map(Number);return y*12+mo};
@@ -343,7 +343,7 @@ function renderSearch(){
   const ab=activeBrands();
   let list=PRICES.filter(p=>ab.has(p.b)&&(!state.mat||p.m2===state.mat)&&(!state.cls||p.cls===state.cls)&&(!state.item||p.item===state.item)&&(!state.size||p.size===state.size));
   if(toks.length) list=list.filter(p=>{const h=norm(p.b+p.code+p.name+p.conn+p.mat+p.m2+p.cls+p.size);return toks.every(t=>h.includes(t))});
-  list.sort((a,b)=>BRANDS.indexOf(a.b)-BRANDS.indexOf(b.b)||a.ti-b.ti||a.code.localeCompare(b.code)||(a.flat?a.name.localeCompare(b.name):0)||sIdx(a.size)-sIdx(b.size));
+  list.sort((a,b)=>BRANDS.indexOf(a.b)-BRANDS.indexOf(b.b)||a.ti-b.ti||(a.ord||0)-(b.ord||0)||a.code.localeCompare(b.code)||(a.flat?a.name.localeCompare(b.name):0)||sIdx(a.size)-sIdx(b.size));
   const total=list.length;list=list.slice(0,400);
   const vs=vendorsFor([...new Set(list.map(p=>p.b))]);
   const noPrice=[...ab].filter(b=>!PRICES.some(p=>p.b===b));
@@ -399,7 +399,7 @@ function renderList(){
   if(fl.length){
     const cell=p=>{if(show==='list')return fmt(p.list);const d=rate(show,b,p.mat,state.month,p.size);return d?fmt(p.list*d.r):'—'};
     for(const c of CATS[b]){const its=fl.filter(p=>p.mat===c);if(!its.length)continue;
-      const names=[...new Set(its.map(p=>p.name))];
+      const names=[...new Set([...its].sort((a,b)=>(a.ord||0)-(b.ord||0)).map(p=>p.name))];
       h+=`<h3>${esc(c)} <span class="tag">${its.length} 筆</span></h3><div class="tw"><table><thead><tr><th>品名</th><th>單位</th><th>尺寸：${show==='list'?'牌價':esc(show)+' 當月價'}</th></tr></thead><tbody>`;
       for(const n of names){const r=its.filter(p=>p.name===n).sort((a,b)=>sIdx(a.size)-sIdx(b.size));
         h+=`<tr><td>${esc(n)}</td><td>${esc(r[0].unit)}</td><td style="white-space:normal">${r.map(p=>`<span style="display:inline-block;margin-right:14px"><span class="muted">${esc(p.size)}</span> <b>${cell(p)}</b></span>`).join('')}</td></tr>`}
@@ -467,7 +467,7 @@ function updFilters(){
   const showCls=cls.length>0&&(state.mat!==''||mats.length===1);if(!showCls||!cls.includes(state.cls))state.cls='';
   $('#fCls').innerHTML=opt(cls,state.cls);$('#clsL').style.display=showCls?'':'none';
   const inC=inM.filter(p=>!state.cls||p.cls===state.cls);
-  const items=[...new Set(inC.map(p=>p.item).filter(Boolean))].sort((x,y)=>/舊牌價/.test(x)-/舊牌價/.test(y));
+  const items=[...new Set(inC.map(p=>p.item).filter(Boolean))];const io={};inC.forEach(p=>{if(p.ord&&(io[p.item]===undefined||p.ord<io[p.item]))io[p.item]=p.ord});items.sort((x,y)=>(io[x]??0)-(io[y]??0));
   const groupsOn=new Set([...activeBrands()].map(groupOf));
   const showItem=items.length>1&&(state.mat!==''||state.cls!==''||groupsOn.size===1);if(!showItem||!items.includes(state.item))state.item='';
   $('#fItem').innerHTML=opt(items,state.item);$('#itemL').style.display=showItem?'':'none';
